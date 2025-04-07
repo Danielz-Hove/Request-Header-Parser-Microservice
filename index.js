@@ -24,6 +24,32 @@ app.get('/api/hello', function (req, res) {
   res.json({ greeting: 'hello API' });
 });
 
+// ***** START OF NEW CODE *****
+
+// API endpoint for whoami service
+app.get('/api/whoami', function (req, res) {
+  // Get IP address
+  // req.ip is usually sufficient, especially if the platform handles 'trust proxy'
+  // Alternatives might include req.headers['x-forwarded-for'] or req.socket.remoteAddress
+  const ipaddress = req.ip;
+
+  // Get preferred language from Accept-Language header
+  const language = req.headers['accept-language'];
+
+  // Get software information from User-Agent header
+  const software = req.headers['user-agent'];
+
+  // Respond with a JSON object containing the information
+  res.json({
+    ipaddress: ipaddress,
+    language: language,
+    software: software
+  });
+});
+
+// ***** END OF NEW CODE *****
+
+
 // listen for requests :)
 var listener = app.listen(process.env.PORT || 3000, function () {
   console.log('Your app is listening on port ' + listener.address().port);
